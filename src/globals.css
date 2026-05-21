@@ -29,6 +29,9 @@
   --toastify-color-info: #2b7fff;
   --toastify-color-warning: #fe9a00;
 
+  --white-RGB: 255 255 255;
+  --black-RGB: 0 0 0;
+
   --cardWidth: 18em;
   --cardHeight: 14em;
 
@@ -37,7 +40,7 @@
   font-weight: 400;
 
   /* Set adaptive font size */
-  font-size: max(16px, 2.5vw);
+  font-size: max(14px, 1.2vw);
 
   color-scheme: light dark;
   color: var(--textColor);
@@ -65,7 +68,9 @@ body,
   /* align-content: space-around; */
   justify-content: center;
   flex: 1;
-  /* overflow: hidden; */
+  /* Clipped layout */
+  overflow: hidden;
+  height: 100%;
 }
 
 #root {
@@ -192,4 +197,24 @@ body,
   .card-content p.subtle {
     @apply font-light opacity-70;
   }
+
+  /* Scrollbar support */
+  .scrollbar-brand {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--white-RGB) / 20%) rgba(var(--black-RGB) / 0%);
+    @apply transition;
+  }
+  .scrollbar-brand::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  /*
+  .scrollbar-brand::-webkit-scrollbar-thumb {
+    background: #0f172a;
+    border-radius: 9999px;
+  }
+  .scrollbar-brand::-webkit-scrollbar-track {
+    background: #e2e8f0;
+  }
+  */
 }
