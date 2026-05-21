@@ -40,7 +40,7 @@
   font-weight: 400;
 
   /* Set adaptive font size */
-  font-size: max(14px, 1.2vw);
+  font-size: max(16px, 1.2vw);
 
   color-scheme: light dark;
   color: var(--textColor);
@@ -84,7 +84,7 @@ body,
  * @see https://v1.tailwindcss.com/components/forms
  */
 .input {
-  /* @apply appearance-none rounded border px-3 py-1 leading-tight shadow; */
+  @apply appearance-none rounded border px-3 py-1 leading-tight shadow;
   height: var(--formSize);
 }
 .input.inactive,
@@ -104,7 +104,9 @@ body,
  */
 .btn,
 .btn-base {
-  @apply box-border items-center gap-2 truncate rounded transition-all;
+  /* all: unset; */
+  /* outline: 0; */
+  @apply appearance-none box-border items-center gap-2 truncate rounded transition-all;
   height: var(--formSize);
 }
 .btn {
@@ -217,4 +219,17 @@ body,
     background: #e2e8f0;
   }
   */
+}
+
+@theme {
+  --animate-scale-pulse: scale-pulse 0.3s ease-in;
+
+  @keyframes scale-pulse {
+    0%. 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
 }

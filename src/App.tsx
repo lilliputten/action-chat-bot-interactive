@@ -4,13 +4,14 @@ import { ToastContainer } from 'react-toastify';
 
 import { TailwindIndicator } from '@/blocks/TailwindIndicator';
 import { isDev } from '@/config';
-import { MainPage } from '@/pages';
+import { ChatPage, StartPage } from '@/pages';
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      {/* <Route path="/create" element={<CardPage />} /> */}
+      <Route path="/" element={<StartPage />} />
+      <Route path="/chat" element={<ChatPage />} />
+      {/* finished */}
     </Routes>
   );
 }
