@@ -1,6 +1,11 @@
-import { cn, generateArray } from '@/lib/helpers';
+import React from 'react';
+
+import { cn } from '@/lib/helpers';
+import { hoursAgo } from '@/lib/helpers/dates';
 import { ChatLayout, LeftSide } from '@/components';
 import { isDev } from '@/config';
+import { TInspectorMoodId } from '@/features/avatar';
+import { ChatNode } from '@/features/chat';
 
 interface TProps {
   className?: string;
@@ -9,7 +14,9 @@ interface TProps {
 export function ChatPage(props: TProps) {
   const { className } = props;
 
-  const leftContent = <LeftSide inspectorMood="neutral" />;
+  const [inspectorMood, setInspectorMood] = React.useState<TInspectorMoodId>('angry');
+
+  const leftContent = <LeftSide inspectorMood={inspectorMood} />;
 
   return (
     <ChatLayout
@@ -25,9 +32,19 @@ export function ChatPage(props: TProps) {
           'content-truncate flex w-full flex-col gap-4',
         )}
       >
-        {generateArray(50).map((idx) => (
+        <ChatNode inspectorMood={inspectorMood} when={hoursAgo(5)}>
+          <p>Test content</p>
+          <p>
+            Test content. Extra long contennt text to test adaptive layout and text wrapping.
+            Long_unwrapping_text_to_test_clipping_feature
+          </p>
+        </ChatNode>
+        <ChatNode isUser inspectorMood={inspectorMood} when={hoursAgo(2)}>
+          <p>Test content</p>
+        </ChatNode>
+        {/*generateArray(50).map((idx) => (
           <div key={idx}>{idx + 1}</div>
-        ))}
+        ))*/}
       </div>
     </ChatLayout>
   );

@@ -11,6 +11,25 @@ export function ensureDate(date?: TDateLike): Date {
   return date;
 }
 
+// Helper to create a relative date
+export function minutesAgo(n: number, d?: TDateLike): Date {
+  d = ensureDate(d);
+  d.setMinutes(d.getMinutes() - n);
+  return d;
+}
+
+export function hoursAgo(n: number, d?: TDateLike): Date {
+  d = ensureDate(d);
+  d.setHours(d.getHours() - n);
+  return d;
+}
+
+export function daysAgo(n: number, d?: TDateLike): Date {
+  d = ensureDate(d);
+  d.setDate(d.getDate() - n);
+  return d;
+}
+
 /**
  * Return proper Russian plural form for a given number.
  */

@@ -62,7 +62,7 @@ export function ChatLayout(props: TProps) {
           'overflow-hidden',
           // 'm-6',
           'flex w-full flex-1 flex-col',
-          'rounded-md',
+          'rounded-2xl',
           'z-1',
           // 'bg-white/50',
           // 'bg-linear-[135deg] from-(--bgLightColor)/70 to-(--bgDarkColor)/70',

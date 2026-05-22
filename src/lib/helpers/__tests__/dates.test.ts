@@ -1,23 +1,4 @@
-import { relativeDateFormat } from '@/lib/helpers/dates';
-
-// Helper to create a date relative to "now"
-function minutesAgo(n: number): Date {
-  const d = new Date();
-  d.setMinutes(d.getMinutes() - n);
-  return d;
-}
-
-function hoursAgo(n: number): Date {
-  const d = new Date();
-  d.setHours(d.getHours() - n);
-  return d;
-}
-
-function daysAgo(n: number): Date {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d;
-}
+import { daysAgo, hoursAgo, minutesAgo, relativeDateFormat } from '@/lib/helpers/dates';
 
 describe('relativeDateFormat', () => {
   it('formats "только что" for dates less than 1 minute ago', () => {

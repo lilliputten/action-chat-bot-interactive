@@ -1,46 +1,63 @@
-import React from 'react';
-
 import { cn } from '@/lib/helpers';
+import { TDateLike } from '@/lib/helpers/dates';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
+import {
+  Avatar,
+  defaultAvatarTypeId,
+  defaultInspectorMoodId,
+  TAvatarTypeId,
+  TInspectorMoodId,
+} from '../avatar';
+import { ChatBubble } from './ChatBubble';
+
 interface TProps {
   className?: string;
-  isUser?: boolean;
   children: TReactNode;
-  when?: Date;
+  isUser?: boolean;
+  when?: TDateLike;
+  inspectorMood?: TInspectorMoodId;
+  avatarType?: TAvatarTypeId;
 }
 
 export function ChatNode(props: TProps) {
-  const { className, isUser } = props;
-  const [isAnimating, setIsAnimating] = React.useState(false);
-  React.useEffect(() => {
-    // Animate on mount
-    setIsAnimating(true);
-  }, []);
+  const {
+    className,
+    children,
+    isUser,
+    when,
+    inspectorMood = defaultInspectorMoodId,
+    avatarType = defaultAvatarTypeId,
+  } = props;
   return (
     <div
       className={cn(
         isDev && '__ChatNode', // DEBUG
+        'flex items-start gap-2',
+        isUser && 'flex-row-reverse',
         className,
       )}
     >
-      <img
+      <Avatar
         className={cn(
-          isDev && '__ChatNode_AvatarImage', // DEBUG
-          'size-36 object-cover',
-          'rounded-full',
-          'shadow-xl',
-          isAnimating && 'animate-scale-pulse',
-          'border-6',
-          'pointer-events-none',
+          isDev && '__ChatNode_Avatar', // DEBUG
+          'shrink-0',
         )}
-        src={`characters/inspector/inspector-face-${inspectorMood}.png`}
-        // Animate on event
-        onClick={() => setIsAnimating(true)}
-        onAnimationEnd={() => setIsAnimating(false)}
+        inspectorMood={inspectorMood}
+        avatarType={avatarType}
+        isUser={isUser}
       />
+      <ChatBubble
+        className={cn(
+          isDev && '__ChatNode_Bubble', // DEBUG
+          // 'flex-1',
+        )}
+        isUser={isUser}
+        when={when}
+      >
+        {children}
+      </ChatBubble>
     </div>
   );
 }
-

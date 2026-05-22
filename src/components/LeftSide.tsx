@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { cn } from '@/lib/helpers';
 import { isDev } from '@/config';
-import { defaultInspectorMoodId, TInspectorMoodId } from '@/features/avatar';
+import { Avatar, defaultInspectorMoodId, TInspectorMoodId } from '@/features/avatar';
 
 interface TProps {
   className?: string;
@@ -11,11 +9,6 @@ interface TProps {
 
 export function LeftSide(props: TProps) {
   const { className, inspectorMood = defaultInspectorMoodId } = props;
-  const [isAnimating, setIsAnimating] = React.useState(false);
-  React.useEffect(() => {
-    // Animate on mount
-    setIsAnimating(true);
-  }, [inspectorMood]);
   return (
     <div
       className={cn(
@@ -23,25 +16,12 @@ export function LeftSide(props: TProps) {
         className,
       )}
     >
-      <img
+      <Avatar
         className={cn(
           isDev && '__LeftSide_InspectorImage', // DEBUG
-          'size-36 object-cover',
-          'rounded-full',
-          'shadow-xl',
-          isAnimating && 'animate-scale-pulse',
-          'border-6',
-          inspectorMood === 'angry'
-            ? 'border-red-500'
-            : inspectorMood === 'happy'
-              ? 'border-green-500'
-              : 'border-white',
-          'pointer-events-none',
         )}
-        src={`characters/inspector/inspector-face-${inspectorMood}.png`}
-        // Animate on event
-        onClick={() => setIsAnimating(true)}
-        onAnimationEnd={() => setIsAnimating(false)}
+        inspectorMood={inspectorMood}
+        large
       />
     </div>
   );
