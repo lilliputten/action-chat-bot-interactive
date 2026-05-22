@@ -1,0 +1,48 @@
+// ex: set ft=jsonc:sw=2:ts=4:
+// @changed 2025.05.22, 16:08
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit:
+  // https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "run custom script",
+      "program": "${workspaceFolder}/test.js",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      // "externalConsole": true,
+      "args": [
+        // "--help",
+      ]
+    },
+    {
+      "name": "run current javascript",
+      "program": "${file}",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node"
+    },
+    {
+      "name": "run current typescript",
+      "program": "${file}",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "tsx"
+    },
+    {
+      "name": "Jest all tests",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm exec jest --no-watch --testTimeout=60000"
+    },
+    {
+      "name": "Jest single test",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm exec jest --no-watch --testTimeout=60000 dates.test"
+    }
+  ]
+}
