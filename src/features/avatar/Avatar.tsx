@@ -3,37 +3,24 @@ import React from 'react';
 import { cn } from '@/lib/helpers';
 import { isDev } from '@/config';
 
-import {
-  defaultAvatarTypeId,
-  defaultInspectorMoodId,
-  TAvatarTypeId,
-  TInspectorMoodId,
-} from '../avatar';
+import { defaultInspectorMoodId, TAvatarTypeId, TInspectorMoodId } from '../avatar';
 
 interface TProps {
   className?: string;
-  isUser?: boolean;
   inspectorMood?: TInspectorMoodId;
   avatarType?: TAvatarTypeId;
   large?: boolean;
 }
 
 export function Avatar(props: TProps) {
-  const {
-    className,
-    isUser,
-    inspectorMood = defaultInspectorMoodId,
-    avatarType = defaultAvatarTypeId,
-    large,
-  } = props;
-  const isInspector = !isUser;
+  const { className, inspectorMood = defaultInspectorMoodId, avatarType, large } = props;
   const [isAnimating, setIsAnimating] = React.useState(false);
   React.useEffect(() => {
     setIsAnimating(true);
   }, [inspectorMood, avatarType]);
-  const imgUrl = isInspector
-    ? `characters/inspector/inspector-face-${inspectorMood}.png`
-    : `characters/user/user-face-${avatarType}.png`;
+  const imgUrl = avatarType
+    ? `characters/user/user-face-${avatarType}.png`
+    : `characters/inspector/inspector-face-${inspectorMood}.png`;
   return (
     <div
       className={cn(
@@ -44,13 +31,13 @@ export function Avatar(props: TProps) {
       <img
         className={cn(
           isDev && '__Avatar_AvatarImage', // DEBUG
-          large ? 'size-36' : 'size-12',
+          large ? 'size-32' : 'size-16',
           'object-cover',
           'rounded-full',
           'shadow-xl',
           isAnimating && 'animate-scale-pulse',
           large ? 'border-6' : 'border-4',
-          isUser
+          avatarType
             ? 'border-blue-500'
             : inspectorMood === 'angry'
               ? 'border-red-500'

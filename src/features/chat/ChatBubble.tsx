@@ -1,17 +1,18 @@
 import { cn } from '@/lib/helpers';
-import { relativeDateFormat, TDateLike } from '@/lib/helpers/dates';
+import { relativeDateFormat } from '@/lib/helpers/dates';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
-interface TProps {
+import { TChatItem } from './TChatItem';
+
+interface TProps extends Pick<TChatItem, 'user' | 'when' | 'follow'> {
   className?: string;
-  isUser?: boolean;
   children: TReactNode;
-  when?: TDateLike;
 }
 
 export function ChatBubble(props: TProps) {
-  const { className, children, isUser, when } = props;
+  const { className, children, user, when, follow } = props;
+  const isUser = !!user;
   const isInspector = !isUser;
   const bgColor = isInspector ? 'bg-slate-100' : 'bg-blue-600';
   const fillColor = isInspector ? 'fill-slate-100' : 'fill-blue-600';
@@ -39,7 +40,7 @@ export function ChatBubble(props: TProps) {
             'content-truncate',
             'card-content',
             'rounded-xl px-5 py-2',
-            isInspector ? 'rounded-tl-none' : 'rounded-tr-sm',
+            isInspector ? 'rounded-tl-none' : 'rounded-tr-none',
             bgColor,
             textColor,
           )}
@@ -56,22 +57,24 @@ export function ChatBubble(props: TProps) {
             </p>
           )}
         </div>
-        <div
-          aria-hidden="true"
-          className={[
-            isDev && '__ChatBubble_Tip', // DEBUG
-            'absolute top-0 h-3 w-6',
-            isInspector ? '-left-0' : '-right-0',
-          ].join(' ')}
-        >
-          <svg viewBox="0 0 100 50" className="absolute top-0 w-full">
-            <path
-              d="M50,50c0-27.6,22.4-50,50-50H0C27.6,0,50,22.4,50,50"
-              fill="red"
-              className={fillColor}
-            />
-          </svg>
-        </div>
+        {!follow && (
+          <div
+            aria-hidden="true"
+            className={[
+              isDev && '__ChatBubble_Tip', // DEBUG
+              'absolute top-0 h-3 w-6',
+              isInspector ? '-left-0' : '-right-0',
+            ].join(' ')}
+          >
+            <svg viewBox="0 0 100 50" className="absolute top-0 w-full">
+              <path
+                d="M50,50c0-27.6,22.4-50,50-50H0C27.6,0,50,22.4,50,50"
+                fill="red"
+                className={fillColor}
+              />
+            </svg>
+          </div>
+        )}
       </div>
     </div>
   );

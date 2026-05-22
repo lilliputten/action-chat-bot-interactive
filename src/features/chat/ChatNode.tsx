@@ -1,40 +1,23 @@
 import { cn } from '@/lib/helpers';
-import { TDateLike } from '@/lib/helpers/dates';
 import { MarkdownText } from '@/components';
 import { isDev } from '@/config';
 
-import {
-  Avatar,
-  defaultAvatarTypeId,
-  defaultInspectorMoodId,
-  TAvatarTypeId,
-  TInspectorMoodId,
-} from '../avatar';
+import { Avatar, defaultInspectorMoodId } from '../avatar';
 import { ChatBubble } from './ChatBubble';
+import { TChatItem } from './TChatItem';
 
-interface TProps {
-  className?: string;
-  content: string | React.ReactNode;
-  isUser?: boolean;
-  when?: TDateLike;
-  inspectorMood?: TInspectorMoodId;
-  avatarType?: TAvatarTypeId;
-}
+type TProps = TChatItem;
 
 export function ChatNode(props: TProps) {
-  const {
-    className,
-    content,
-    isUser,
-    when,
-    inspectorMood = defaultInspectorMoodId,
-    avatarType = defaultAvatarTypeId,
-  } = props;
+  const { className, content, when, inspector = defaultInspectorMoodId, user, follow } = props;
+  const isUser = !!user;
   return (
     <div
       className={cn(
         isDev && '__ChatNode', // DEBUG
         'flex items-start gap-2',
+        'mt-6',
+        follow && 'mt-1',
         isUser && 'flex-row-reverse',
         className,
       )}
@@ -43,18 +26,18 @@ export function ChatNode(props: TProps) {
         className={cn(
           isDev && '__ChatNode_Avatar', // DEBUG
           'shrink-0',
+          follow && 'pointer-events-none opacity-0 aria-hidden:hidden',
         )}
-        inspectorMood={inspectorMood}
-        avatarType={avatarType}
-        isUser={isUser}
+        inspectorMood={inspector}
+        avatarType={user}
       />
       <ChatBubble
         className={cn(
           isDev && '__ChatNode_Bubble', // DEBUG
-          // 'flex-1',
         )}
-        isUser={isUser}
+        user={user}
         when={when}
+        follow={follow}
       >
         {typeof content === 'string' ? <MarkdownText>{content}</MarkdownText> : content}
       </ChatBubble>
