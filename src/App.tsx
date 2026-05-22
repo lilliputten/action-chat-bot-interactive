@@ -3,15 +3,16 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { TailwindIndicator } from '@/blocks/TailwindIndicator';
-import { isDev } from '@/config';
-import { ChatPage, StartPage } from '@/pages';
+import { chatRoute, isDev, rootRoute, startRoute } from '@/config';
+import { ChatPage, IntroPage, StartPage } from '@/pages';
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<StartPage />} />
-      <Route path="/chat" element={<ChatPage />} />
-      {/* finished */}
+      <Route path={rootRoute} element={<IntroPage />} />
+      <Route path={startRoute} element={<StartPage />} />
+      <Route path={chatRoute} element={<ChatPage />} />
+      {/* <Route path={resultsRoute} element={<ResultsPage />} /> */}
     </Routes>
   );
 }

@@ -41,7 +41,7 @@ export function ChatLayout(props: TProps) {
         className={cn(
           isDev && '__ChatLayout_BackgroundImage', // DEBUG
           'absolute inset-0',
-          'bg-[url(bg-image.jpg)] bg-cover bg-center',
+          'bg-[url(bg-image-03.jpg)] bg-cover bg-center',
           'opacity-40',
           'z-0',
         )}

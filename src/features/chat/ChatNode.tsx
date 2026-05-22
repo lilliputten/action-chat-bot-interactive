@@ -25,7 +25,7 @@ export function ChatNode(props: TProps) {
       <Avatar
         className={cn(
           isDev && '__ChatNode_Avatar', // DEBUG
-          'shrink-0',
+          'max-xs:hidden shrink-0',
           follow && 'pointer-events-none opacity-0 aria-hidden:hidden',
         )}
         inspectorMood={inspector}

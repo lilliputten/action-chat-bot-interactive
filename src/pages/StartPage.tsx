@@ -1,10 +1,10 @@
 import React from 'react';
-import { Play } from 'lucide-react';
+import { ChevronLeft, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/helpers';
 import { StartLayout } from '@/components';
-import { isDev } from '@/config';
+import { chatRoute, isDev, rootRoute } from '@/config';
 import { avatarTypeIds, avatarTypes, TAvatarTypeId } from '@/features/avatar';
 
 interface TProps {
@@ -74,13 +74,11 @@ export function StartPage(props: TProps) {
             >
               <img
                 className={cn(
-                  isDev && '__LeftSide_InspectorImage', // DEBUG
-                  'size-48 object-cover',
+                  isDev && '__StartPage_InspectorImage', // DEBUG
+                  'size-40 object-cover',
                   'rounded-xl',
-                  // 'shadow-xl',
                   'transition',
                   'pointer-events-none',
-                  // 'group-hover/avatar:scale-105',
                 )}
                 src={`characters/user/user-${id}.png`}
                 // Animate on event
@@ -97,20 +95,29 @@ export function StartPage(props: TProps) {
         <div
           className={cn(
             isDev && '__StartPage_Actions', // DEBUG
-            'box-border flex flex-wrap items-center justify-center gap-8',
+            'box-border flex flex-wrap items-center gap-4',
           )}
         >
           <div
             className={cn(
-              isDev && '__StartPage_Action', // DEBUG
-              'btn-base flex w-full items-center justify-center',
-              'font-bold',
-              'py-6',
-              'cursor-pointer select-none',
+              isDev && '__StartPage_Action_Back', // DEBUG
+              'btn-base btn-large shrink-0',
+              startAllowed && 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700',
+              !startAllowed && 'disabled',
+            )}
+            onClick={() => navigate(rootRoute)}
+          >
+            <ChevronLeft className="size-4 shrink-0" />
+            <span className="truncate">Назад</span>
+          </div>
+          <div
+            className={cn(
+              isDev && '__StartPage_Action_Start', // DEBUG
+              'btn-base btn-large flex-1',
               startAllowed && 'bg-green-500 hover:bg-green-600 active:bg-green-700',
               !startAllowed && 'disabled',
             )}
-            onClick={() => navigate('/chat')}
+            onClick={() => navigate(chatRoute)}
           >
             <Play className="size-4 shrink-0" />
             <span className="truncate">Начать</span>

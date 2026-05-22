@@ -17,7 +17,7 @@ export function StartLayout(props: TProps) {
         'flex size-full flex-1 flex-row',
         'overflow-hidden',
         'relative',
-        'bg-linear-[135deg] from-sky-500/70 to-sky-800/70',
+        // 'bg-linear-[135deg] from-sky-500/70 to-sky-700/70',
         className,
       )}
     >
@@ -25,8 +25,8 @@ export function StartLayout(props: TProps) {
         className={cn(
           isDev && '__StartLayout_BackgroundImage', // DEBUG
           'absolute inset-0',
-          'bg-[url(bg-image.jpg)] bg-cover bg-center',
-          'opacity-40',
+          'bg-[url(bg-image-03.jpg)] bg-cover bg-center',
+          'opacity-20',
           'z-0',
         )}
       />

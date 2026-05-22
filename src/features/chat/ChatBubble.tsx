@@ -31,7 +31,7 @@ export function ChatBubble(props: TProps) {
           isDev && '__ChatBubble', // DEBUG
           'relative',
           'max-w-lg',
-          isInspector ? 'pl-3' : 'pr-3',
+          isInspector ? 'pl-4' : 'pr-4',
         )}
       >
         <div
@@ -40,7 +40,7 @@ export function ChatBubble(props: TProps) {
             'content-truncate',
             'card-content',
             'rounded-xl px-5 py-2',
-            isInspector ? 'rounded-tl-none' : 'rounded-tr-none',
+            !follow && (isInspector ? 'rounded-tl-lg' : 'rounded-tr-lg'),
             bgColor,
             textColor,
           )}
@@ -62,7 +62,7 @@ export function ChatBubble(props: TProps) {
             aria-hidden="true"
             className={[
               isDev && '__ChatBubble_Tip', // DEBUG
-              'absolute top-0 h-3 w-6',
+              'absolute top-0 h-4 w-8',
               isInspector ? '-left-0' : '-right-0',
             ].join(' ')}
           >

@@ -9,7 +9,7 @@
 
 Dialog Chat-Bot Trainer with a pharmacy store inspector.
 
-![Application banner](public/opengraph-image-v2.jpg 'Application banner')
+![Application banner](public/opengraph-image-v3.jpg 'Application banner')
 
 ## Build info (auto-generated)
 

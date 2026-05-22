@@ -45,7 +45,8 @@
   color-scheme: light dark;
   color: var(--textColor);
   /* background-color: var(--backgroundColor); */
-  background: linear-gradient(135deg, var(--bgLightColor), var(--bgDarkColor));
+  /* background: linear-gradient(135deg, var(--bgLightColor), var(--bgDarkColor)); */
+  background: var(--color-sky-600);
   background-attachment: fixed;
 
   font-synthesis: none;
@@ -108,6 +109,9 @@ body,
   /* outline: 0; */
   @apply box-border appearance-none items-center gap-2 truncate rounded transition-all;
   height: var(--formSize);
+}
+.btn-large {
+  @apply flex items-center justify-center cursor-pointer p-6 font-bold select-none;
 }
 .btn {
   @apply px-2 py-1;
@@ -222,6 +226,7 @@ body,
 }
 
 @theme {
+  --breakpoint-xs: 24rem; /* Creates a new xs: variant */
   --animate-scale-pulse: scale-pulse 0.3s ease-in;
 
   @keyframes scale-pulse {
