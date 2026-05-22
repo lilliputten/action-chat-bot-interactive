@@ -32,16 +32,24 @@ export function ChatPage(props: TProps) {
           'content-truncate flex w-full flex-col gap-4',
         )}
       >
-        <ChatNode inspectorMood={inspectorMood} when={hoursAgo(5)}>
-          <p>Test content</p>
-          <p>
-            Test content. Extra long contennt text to test adaptive layout and text wrapping.
-            Long_unwrapping_text_to_test_clipping_feature
-          </p>
-        </ChatNode>
-        <ChatNode isUser inspectorMood={inspectorMood} when={hoursAgo(2)}>
-          <p>Test content</p>
-        </ChatNode>
+        <ChatNode
+          inspectorMood={inspectorMood}
+          when={hoursAgo(5)}
+          content={`
+Test content
+
+Test content. Extra long contennt text to test adaptive layout and text wrapping.
+Long_unwrapping_text_to_test_clipping_feature
+          `}
+        />
+        <ChatNode
+          isUser
+          inspectorMood={inspectorMood}
+          when={hoursAgo(2)}
+          content={`
+Test content
+          `}
+        />
         {/*generateArray(50).map((idx) => (
           <div key={idx}>{idx + 1}</div>
         ))*/}

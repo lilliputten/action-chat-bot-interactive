@@ -1,7 +1,7 @@
 import { cn } from '@/lib/helpers';
 import { TDateLike } from '@/lib/helpers/dates';
+import { MarkdownText } from '@/components';
 import { isDev } from '@/config';
-import { TReactNode } from '@/lib';
 
 import {
   Avatar,
@@ -14,7 +14,7 @@ import { ChatBubble } from './ChatBubble';
 
 interface TProps {
   className?: string;
-  children: TReactNode;
+  content: string | React.ReactNode;
   isUser?: boolean;
   when?: TDateLike;
   inspectorMood?: TInspectorMoodId;
@@ -24,7 +24,7 @@ interface TProps {
 export function ChatNode(props: TProps) {
   const {
     className,
-    children,
+    content,
     isUser,
     when,
     inspectorMood = defaultInspectorMoodId,
@@ -56,7 +56,7 @@ export function ChatNode(props: TProps) {
         isUser={isUser}
         when={when}
       >
-        {children}
+        {typeof content === 'string' ? <MarkdownText>{content}</MarkdownText> : content}
       </ChatBubble>
     </div>
   );
