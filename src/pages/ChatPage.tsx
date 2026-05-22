@@ -9,7 +9,7 @@ interface TProps {
 export function ChatPage(props: TProps) {
   const { className } = props;
 
-  const leftContent = <LeftSide />;
+  const leftContent = <LeftSide inspectorMood="neutral" />;
 
   return (
     <ChatLayout

@@ -5,3 +5,4 @@ export const avatarTypes = {
 export type TAvatarTypeId = keyof typeof avatarTypes;
 export type TAvatarTypeName = (typeof avatarTypes)[keyof typeof avatarTypes];
 export const avatarTypeIds = Object.keys(avatarTypes) as TAvatarTypeId[];
+export const defaultAvatarTypeId = avatarTypeIds[0];

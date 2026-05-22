@@ -1,10 +1,11 @@
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Play } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/helpers';
 import { StartLayout } from '@/components';
 import { isDev } from '@/config';
-import { avatarTypeIds, avatarTypes, TAvatarTypeId } from '@/features/avatar/types';
+import { avatarTypeIds, avatarTypes, TAvatarTypeId } from '@/features/avatar';
 
 interface TProps {
   className?: string;
@@ -13,11 +14,15 @@ interface TProps {
 export function StartPage(props: TProps) {
   const { className } = props;
 
-  const [selectedAvatarId, setSelectedAvatarId] = React.useState<TAvatarTypeId | undefined>();
+  const [selectedAvatarId, setSelectedAvatarId] = React.useState<TAvatarTypeId | undefined>(() => {
+    const saved = localStorage.getItem('selectedAvatarId') as TAvatarTypeId | null;
+    return saved || undefined;
+  });
   const [animatingAvatar, setAnimatingAvatar] = React.useState<TAvatarTypeId | undefined>();
-  const [name, setName] = React.useState<string>('');
 
-  const startAllowed = !!selectedAvatarId && !!name;
+  const startAllowed = !!selectedAvatarId;
+
+  const navigate = useNavigate();
 
   return (
     <StartLayout
@@ -59,11 +64,12 @@ export function StartPage(props: TProps) {
                 'transition-all',
                 'cursor-pointer',
                 'select-none',
-                // 'hover:opacity-85',
               )}
               onClick={() => {
                 setSelectedAvatarId(id);
                 setAnimatingAvatar(id);
+                // Store to the localStorage
+                localStorage.setItem('selectedAvatarId', id);
               }}
             >
               <img
@@ -88,36 +94,6 @@ export function StartPage(props: TProps) {
             </div>
           ))}
         </div>
-        <hr className="w-full border-white" />
-        {/*
-        <h2 className="text-center">Введите имя:</h2>
-        */}
-        <div
-          className={cn(
-            isDev && '__StartPage_Name', // DEBUG
-            // 'content-truncate',
-            'box-border flex flex-wrap items-center justify-center gap-8',
-          )}
-        >
-          <input
-            type="text"
-            className={cn(
-              isDev && '__StartPage_Actions', // DEBUG
-              'input w-full rounded-md border border-sky-600 bg-white text-gray-900 placeholder-gray-400',
-              'ring-2 ring-transparent',
-              'focus:border-sky-300 focus:ring-4 focus:ring-sky-400 focus:outline-none',
-              'hover:ring-sky-400',
-              'transition',
-              'py-0!',
-              'text-center text-xl',
-            )}
-            placeholder="Введите ваше имя"
-            onChange={(ev) => {
-              setName(ev.target.value);
-            }}
-            // defaultValue="Аномим"
-          />
-        </div>
         <div
           className={cn(
             isDev && '__StartPage_Actions', // DEBUG
@@ -128,14 +104,15 @@ export function StartPage(props: TProps) {
             className={cn(
               isDev && '__StartPage_Action', // DEBUG
               'btn-base flex w-full items-center justify-center',
-              'text-xl font-bold',
+              'font-bold',
               'py-6',
               'cursor-pointer select-none',
               startAllowed && 'bg-green-500 hover:bg-green-600 active:bg-green-700',
               !startAllowed && 'disabled',
             )}
+            onClick={() => navigate('/chat')}
           >
-            <Check className="size-6 shrink-0" />
+            <Play className="size-4 shrink-0" />
             <span className="truncate">Начать</span>
           </div>
         </div>

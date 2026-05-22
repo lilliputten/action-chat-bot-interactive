@@ -16,7 +16,8 @@ export function ChatLayout(props: TProps) {
   /** Left and right panel styles */
   const sideBarClassName = cn(
     isDev && '__ChatLayout_Sidebar', // DEBUG
-    'content-truncate flex flex-col items-center justify-center gap-4 p-6',
+    // 'content-truncate',
+    'flex flex-col items-center justify-center gap-4',
     'w-[23%]',
     'max-sm:hidden', // Don't show side panels on small screens
     'z-1',
@@ -27,11 +28,12 @@ export function ChatLayout(props: TProps) {
     <div
       className={cn(
         isDev && '__ChatLayout', // DEBUG
-        'flex size-full flex-1 flex-row',
+        'flex h-full flex-1 flex-row',
         'overflow-hidden',
         'relative',
         // 'bg-linear-[135deg] from-(--bgLightColor)/70 to-(--bgDarkColor)/70',
         'bg-linear-[135deg] from-sky-500/70 to-sky-800/70',
+        'gap-6 p-6',
         className,
       )}
     >
@@ -58,7 +60,8 @@ export function ChatLayout(props: TProps) {
         className={cn(
           isDev && '__ChatLayout_Main', // DEBUG
           'overflow-hidden',
-          'm-6 flex w-full flex-1 flex-col',
+          // 'm-6',
+          'flex w-full flex-1 flex-col',
           'rounded-md',
           'z-1',
           // 'bg-white/50',

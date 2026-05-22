@@ -2,40 +2,37 @@ import React from 'react';
 
 import { cn } from '@/lib/helpers';
 import { isDev } from '@/config';
-import { defaultInspectorMoodId, TInspectorMoodId } from '@/features/avatar';
+import { TReactNode } from '@/lib';
 
 interface TProps {
   className?: string;
-  inspectorMood?: TInspectorMoodId;
+  isUser?: boolean;
+  children: TReactNode;
+  when?: Date;
 }
 
-export function LeftSide(props: TProps) {
-  const { className, inspectorMood = defaultInspectorMoodId } = props;
+export function ChatNode(props: TProps) {
+  const { className, isUser } = props;
   const [isAnimating, setIsAnimating] = React.useState(false);
   React.useEffect(() => {
     // Animate on mount
     setIsAnimating(true);
-  }, [inspectorMood]);
+  }, []);
   return (
     <div
       className={cn(
-        isDev && '__LeftSide', // DEBUG
+        isDev && '__ChatNode', // DEBUG
         className,
       )}
     >
       <img
         className={cn(
-          isDev && '__LeftSide_InspectorImage', // DEBUG
+          isDev && '__ChatNode_AvatarImage', // DEBUG
           'size-36 object-cover',
           'rounded-full',
           'shadow-xl',
           isAnimating && 'animate-scale-pulse',
           'border-6',
-          inspectorMood === 'angry'
-            ? 'border-red-500'
-            : inspectorMood === 'happy'
-              ? 'border-green-500'
-              : 'border-white',
           'pointer-events-none',
         )}
         src={`characters/inspector/inspector-face-${inspectorMood}.png`}
@@ -46,3 +43,4 @@ export function LeftSide(props: TProps) {
     </div>
   );
 }
+
