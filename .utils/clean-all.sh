@@ -1,6 +1,6 @@
 #!/bin/sh
 # @desc Clean all temp files
-# @changed 2025.06.08, 03:19
+# @changed 2026.05.23, 05:07
 
 scriptsPath=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
 rootPath=`dirname "$scriptsPath"`
@@ -36,8 +36,7 @@ $FINDCMD . \
   -not \( -name 'node_modules' -prune \) \
   \
   \( \
-    -name '*_' \
-    -o -name '*~' \
+    -name '*~' \
     -o -name '*.py[co]' \
     -o -name '.*sw[op]' \
     -o -name '*.bak' \

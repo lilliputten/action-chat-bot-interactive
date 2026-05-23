@@ -111,7 +111,7 @@ body,
   height: var(--formSize);
 }
 .btn-large {
-  @apply flex items-center justify-center cursor-pointer p-6 font-bold select-none;
+  @apply flex cursor-pointer items-center justify-center p-6 font-bold select-none;
 }
 .btn {
   @apply px-2 py-1;
@@ -227,8 +227,18 @@ body,
 
 @theme {
   --breakpoint-xs: 24rem; /* Creates a new xs: variant */
-  --animate-scale-pulse: scale-pulse 0.3s ease-in;
 
+  --animate-scale-pulse-sm: scale-pulse-sm 0.3s ease-in;
+  @keyframes scale-pulse-sm {
+    0%. 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  --animate-scale-pulse: scale-pulse 0.3s ease-in;
   @keyframes scale-pulse {
     0%. 100% {
       transform: scale(1);

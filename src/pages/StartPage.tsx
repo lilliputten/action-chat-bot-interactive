@@ -102,8 +102,7 @@ export function StartPage(props: TProps) {
             className={cn(
               isDev && '__StartPage_Action_Back', // DEBUG
               'btn-base btn-large shrink-0',
-              startAllowed && 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700',
-              !startAllowed && 'disabled',
+              'bg-blue-600 hover:bg-blue-700 active:bg-blue-800',
             )}
             onClick={() => navigate(rootRoute)}
           >
@@ -115,7 +114,7 @@ export function StartPage(props: TProps) {
               isDev && '__StartPage_Action_Start', // DEBUG
               'btn-base btn-large flex-1',
               startAllowed && 'bg-green-500 hover:bg-green-600 active:bg-green-700',
-              !startAllowed && 'disabled',
+              !startAllowed && 'disabled border border-white/50',
             )}
             onClick={() => navigate(chatRoute)}
           >

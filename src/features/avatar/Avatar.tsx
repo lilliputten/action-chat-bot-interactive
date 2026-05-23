@@ -7,49 +7,56 @@ import { defaultInspectorMoodId, TAvatarTypeId, TInspectorMoodId } from '../avat
 
 interface TProps {
   className?: string;
-  inspectorMood?: TInspectorMoodId;
+  inspector?: TInspectorMoodId;
   avatarType?: TAvatarTypeId;
+  hidden?: boolean;
   large?: boolean;
 }
 
 export function Avatar(props: TProps) {
-  const { className, inspectorMood = defaultInspectorMoodId, avatarType, large } = props;
+  const { className, inspector = defaultInspectorMoodId, avatarType, large, hidden } = props;
   const [isAnimating, setIsAnimating] = React.useState(false);
   React.useEffect(() => {
     setIsAnimating(true);
-  }, [inspectorMood, avatarType]);
+  }, [inspector, avatarType]);
   const imgUrl = avatarType
     ? `characters/user/user-face-${avatarType}.png`
-    : `characters/inspector/inspector-face-${inspectorMood}.png`;
+    : `characters/inspector/inspector-face-${inspector}.png`;
+  const sizeClass = large ? 'size-32' : 'size-16';
+  const widthClass = large ? 'w-32' : 'w-16';
   return (
     <div
       className={cn(
         isDev && '__Avatar', // DEBUG
+        hidden && 'pointer-events-none opacity-0 aria-hidden:hidden',
+        widthClass,
         className,
       )}
     >
-      <img
-        className={cn(
-          isDev && '__Avatar_AvatarImage', // DEBUG
-          large ? 'size-32' : 'size-16',
-          'object-cover',
-          'rounded-full',
-          'shadow-xl',
-          isAnimating && 'animate-scale-pulse',
-          large ? 'border-6' : 'border-4',
-          avatarType
-            ? 'border-blue-500'
-            : inspectorMood === 'angry'
+      {!hidden && (
+        <img
+          className={cn(
+            isDev && '__Avatar_AvatarImage', // DEBUG
+            sizeClass,
+            'object-cover',
+            'rounded-full',
+            'shadow-xl',
+            isAnimating && 'animate-scale-pulse',
+            large ? 'border-6' : 'border-4',
+            inspector === 'angry'
               ? 'border-red-500'
-              : inspectorMood === 'happy'
+              : inspector === 'happy'
                 ? 'border-green-500'
-                : 'border-white',
-          'pointer-events-none',
-        )}
-        src={imgUrl}
-        onClick={() => setIsAnimating(true)}
-        onAnimationEnd={() => setIsAnimating(false)}
-      />
+                : avatarType
+                  ? 'border-orange-500'
+                  : 'border-white',
+            'pointer-events-none',
+          )}
+          src={imgUrl}
+          onClick={() => setIsAnimating(true)}
+          onAnimationEnd={() => setIsAnimating(false)}
+        />
+      )}
     </div>
   );
 }

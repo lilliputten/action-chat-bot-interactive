@@ -4,6 +4,7 @@ import { TAvatarTypeId, TInspectorMoodId } from '../avatar';
 
 export interface TChatItem {
   className?: string;
+  scenarioId?: string; // TScenarioItemId;
   /** Markdown content */
   content: string;
   when?: TDateLike;
@@ -12,5 +13,3 @@ export interface TChatItem {
   follow?: boolean;
   // TODO: Item type, etc?
 }
-
-export type TChatHistory = TChatItem[];

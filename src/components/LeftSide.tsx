@@ -20,7 +20,7 @@ export function LeftSide(props: TProps) {
         className={cn(
           isDev && '__LeftSide_InspectorImage', // DEBUG
         )}
-        inspectorMood={inspectorMood}
+        inspector={inspectorMood}
         large
       />
     </div>

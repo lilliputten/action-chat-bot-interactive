@@ -1,4 +1,5 @@
-export type TDateLike = Date | string | number;
+export type TDateTicks = number;
+export type TDateLike = Date | string | TDateTicks;
 
 /** Workaround for cases when date has been passed as an ISO string or en empty value (now) */
 export function ensureDate(date?: TDateLike): Date {

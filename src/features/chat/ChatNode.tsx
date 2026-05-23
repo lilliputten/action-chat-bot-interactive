@@ -6,10 +6,25 @@ import { Avatar, defaultInspectorMoodId } from '../avatar';
 import { ChatBubble } from './ChatBubble';
 import { TChatItem } from './TChatItem';
 
-type TProps = TChatItem;
+interface TProps extends Omit<TChatItem, 'content'> {
+  onClick?: () => void;
+  content: React.ReactNode | string;
+  bubbleClassName?: string;
+  bubbleContentClassName?: string;
+}
 
 export function ChatNode(props: TProps) {
-  const { className, content, when, inspector = defaultInspectorMoodId, user, follow } = props;
+  const {
+    className,
+    bubbleClassName,
+    bubbleContentClassName,
+    content,
+    when,
+    inspector = defaultInspectorMoodId,
+    user,
+    follow,
+    onClick,
+  } = props;
   const isUser = !!user;
   return (
     <div
@@ -21,20 +36,28 @@ export function ChatNode(props: TProps) {
         isUser && 'flex-row-reverse',
         className,
       )}
+      onClick={onClick}
     >
       <Avatar
         className={cn(
           isDev && '__ChatNode_Avatar', // DEBUG
           'max-xs:hidden shrink-0',
-          follow && 'pointer-events-none opacity-0 aria-hidden:hidden',
+          // follow && 'pointer-events-none opacity-0 aria-hidden:hidden',
         )}
-        inspectorMood={inspector}
+        inspector={inspector}
         avatarType={user}
+        hidden={follow}
       />
       <ChatBubble
         className={cn(
           isDev && '__ChatNode_Bubble', // DEBUG
+          bubbleClassName,
         )}
+        bubbleContentClassName={cn(
+          // isUser && inspector === 'angry' && 'bg-red-500',
+          bubbleContentClassName,
+        )}
+        inspector={inspector}
         user={user}
         when={when}
         follow={follow}

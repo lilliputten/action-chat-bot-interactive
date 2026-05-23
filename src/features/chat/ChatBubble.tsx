@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { cn } from '@/lib/helpers';
 import { relativeDateFormat } from '@/lib/helpers/dates';
 import { isDev } from '@/config';
@@ -5,23 +7,41 @@ import { TReactNode } from '@/lib';
 
 import { TChatItem } from './TChatItem';
 
-interface TProps extends Pick<TChatItem, 'user' | 'when' | 'follow'> {
+interface TProps extends Pick<TChatItem, 'user' | 'when' | 'follow' | 'inspector'> {
   className?: string;
+  bubbleContentClassName?: string;
   children: TReactNode;
 }
 
 export function ChatBubble(props: TProps) {
-  const { className, children, user, when, follow } = props;
+  const { className, children, user, when, follow, inspector, bubbleContentClassName } = props;
   const isUser = !!user;
   const isInspector = !isUser;
-  const bgColor = isInspector ? 'bg-slate-100' : 'bg-blue-600';
-  const fillColor = isInspector ? 'fill-slate-100' : 'fill-blue-600';
+  const bgColor = isInspector
+    ? 'bg-slate-100'
+    : inspector === 'angry'
+      ? 'bg-red-500'
+      : inspector === 'happy'
+        ? 'bg-green-500'
+        : 'bg-orange-500';
+  const fillColor = isInspector
+    ? 'fill-slate-100'
+    : inspector === 'angry'
+      ? 'fill-red-500'
+      : inspector === 'happy'
+        ? 'fill-green-500'
+        : 'fill-orange-500';
   const textColor = isInspector ? 'text-slate-900' : 'text-white';
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  React.useEffect(() => {
+    setIsAnimating(true);
+  }, []);
   return (
     <div
       className={cn(
         isDev && '__ChatBubble', // DEBUG
         'content-truncate',
+        isAnimating && 'animate-scale-pulse-sm',
         isInspector ? 'justify-start' : 'justify-end',
         className,
       )}
@@ -43,6 +63,7 @@ export function ChatBubble(props: TProps) {
             !follow && (isInspector ? 'rounded-tl-lg' : 'rounded-tr-lg'),
             bgColor,
             textColor,
+            bubbleContentClassName,
           )}
         >
           {children}
