@@ -1,6 +1,8 @@
 import React from 'react';
+import { preload } from 'react-dom';
 
 import { cn } from '@/lib/helpers';
+import bgImg from '@/assets/bg/bg-image-03.jpg';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
@@ -17,15 +19,14 @@ export function ChatLayout(props: TProps) {
   const { className, sidePanelClassName, children, leftContent, rightContent, setScrollBottom } =
     props;
 
+  preload(bgImg, { as: 'image' });
+
   const bottomRef = React.useRef<HTMLDivElement>(null);
 
   const scrollBottom = React.useCallback(() => {
-    // setTimeout(() => {
     requestAnimationFrame(() => {
-      console.log('[ChatLayout:scroll]');
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     });
-    // }, 3000);
   }, [bottomRef]);
 
   React.useEffect(() => {
@@ -60,15 +61,18 @@ export function ChatLayout(props: TProps) {
         className={cn(
           isDev && '__ChatLayout_BackgroundImage', // DEBUG
           'absolute inset-0',
-          'bg-[url(bg-image-03.jpg)] bg-cover bg-center',
+          'bg-cover bg-center',
           'opacity-10',
           'z-0',
         )}
+        style={{ backgroundImage: `url(${bgImg})` }}
       />
+
       {!!leftContent && (
         <div
           className={cn(
             isDev && '__ChatLayout_Left', // DEBUG
+            'z-1',
             sideBarClassName,
           )}
         >
@@ -81,10 +85,10 @@ export function ChatLayout(props: TProps) {
           'overflow-hidden',
           'flex w-full flex-1 flex-col',
           'rounded-2xl',
-          'z-1',
           'bg-sky-800/80',
-          'border-1 border-sky-800',
+          'border border-sky-800',
           'shadow-xl',
+          'z-1',
         )}
       >
         <div
@@ -117,6 +121,7 @@ export function ChatLayout(props: TProps) {
         <div
           className={cn(
             isDev && '__ChatLayout_Right', // DEBUG
+            'z-1',
             sideBarClassName,
           )}
         >

@@ -49,6 +49,7 @@ yarn-error.log*
 .contentlayer
 
 # Temporariy, swap & ignored files
+/.arc
 /bin
 /log*.txt
 /config-local.*

@@ -59,7 +59,6 @@ export function LastChatNode(props: TProps) {
 
   const goToTheNextItem = React.useCallback(
     (goTo: TScenarioGoToId) => {
-      console.log('[LastChatNode:goToTheNextItem]', goTo);
       setIsWaiting(true);
       memo.waitingTimeoutHandler = setTimeout(() => {
         memo.waitingTimeoutHandler = undefined;
@@ -73,13 +72,8 @@ export function LastChatNode(props: TProps) {
     [goToResults, memo, setIsWaiting, setScenarioId],
   );
 
-  const refScenarioId = React.useRef<TScenarioItemId | undefined>(undefined);
-
   // Effect: Initialize
   React.useEffect(() => {
-    console.log('[LastChatNode:Effect: Initialize]', scenarioId, refScenarioId.current, {
-      memo: { ...memo },
-    });
     if (scenarioId && memo.scenarioId !== scenarioId) {
       memo.scenarioId = scenarioId;
       // memo.scenarioId = scenarioId;
@@ -90,7 +84,6 @@ export function LastChatNode(props: TProps) {
       // Reset state...
       setAnswers(undefined);
       setAnswerIdx(undefined);
-      console.log('[LastChatNode:Effect: Initialize scenario node]', scenarioId);
       // Try to find scenario node...
       const scenarioNode = scenarioId && scenario[scenarioId];
       if (!scenarioNode) {
@@ -101,32 +94,34 @@ export function LastChatNode(props: TProps) {
       if (!answers && !goTo) {
         const msg = `Not specified any of answers and goTo for the scenarion node '${scenarioId}'`;
         const error = new Error(msg);
+        // eslint-disable-next-line no-console
         console.error('[LastChatNode:Effect: Initialize scenario node]', msg, {
           error,
           scenarioId,
           scenarioNode,
         });
+        debugger; // eslint-disable-line no-debugger
         return;
       }
       if (answers && goTo) {
         const msg = `Specified both answers and goTo for the scenarion node '${scenarioId}'`;
         const error = new Error(msg);
+        // eslint-disable-next-line no-console
         console.error('[LastChatNode:Effect: Initialize scenario node]', msg, {
           error,
           scenarioId,
           scenarioNode,
         });
+        debugger; // eslint-disable-line no-debugger
         return;
       }
       if (goTo) {
         goToTheNextItem(goTo);
       } else if (answers?.length) {
-        console.log('[LastChatNode:answers]', answers);
         setIsWaiting(true);
         let answerIdx = 0;
         setAnswers(undefined);
         const addAnswer = () => {
-          console.log('[addAnswer]', answerIdx);
           const answer = answers[answerIdx++];
           setAnswers((answers) => (answers || []).concat(answer));
           if (answerIdx < answers.length) {
@@ -143,10 +138,6 @@ export function LastChatNode(props: TProps) {
   }, [memo, scenarioId, setIsWaiting, goToTheNextItem]);
 
   React.useEffect(() => {
-    console.log('[LastChatNode:scroll?]', {
-      scrollBottom,
-      answers,
-    });
     if (scrollBottom && answers?.length) {
       scrollBottom();
     }
@@ -227,12 +218,6 @@ export function LastChatNode(props: TProps) {
                   inspector: inspectorMood,
                   user: selectedAvatarId,
                 };
-                console.log('[LastChatNode:answer]', idx, {
-                  reaction,
-                  goTo,
-                  points,
-                  answer,
-                });
                 setChatStats((stats) => ({ ...stats, points: stats.points + (points || 0) }));
                 setAnswerIdx(idx);
                 setChatHistory((history) => history.concat(chatItem));
@@ -245,13 +230,6 @@ export function LastChatNode(props: TProps) {
                       when: Date.now(),
                       inspector: inspectorMood,
                     };
-                    console.log('[LastChatNode:answer]', idx, {
-                      reaction,
-                      goTo,
-                      points,
-                      answer,
-                    });
-                    // debugger;
                     setChatHistory((history) => history.concat(chatItem));
                     goToTheNextItem(goTo);
                   }, autoGoToDelay);

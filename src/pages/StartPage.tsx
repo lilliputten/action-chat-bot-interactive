@@ -3,13 +3,21 @@ import { ChevronLeft, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/helpers';
+import userAvatarFemale from '@/assets/characters/user/user-female.png?lqip';
+import userAvatarMale from '@/assets/characters/user/user-male.png?lqip';
 import { StartLayout } from '@/components';
 import { chatRoute, isDev, rootRoute } from '@/config';
 import { avatarTypeIds, avatarTypes, TAvatarTypeId } from '@/features/avatar';
+import { LQIP } from '@/global';
 
 interface TProps {
   className?: string;
 }
+
+const userAvatars: Record<TAvatarTypeId, LQIP> = {
+  male: userAvatarMale,
+  female: userAvatarFemale,
+};
 
 export function StartPage(props: TProps) {
   const { className } = props;
@@ -79,8 +87,10 @@ export function StartPage(props: TProps) {
                   'rounded-xl',
                   'transition',
                   'pointer-events-none',
+                  'bg-cover',
                 )}
-                src={`characters/user/user-${id}.png`}
+                src={userAvatars[id].src}
+                style={{ backgroundImage: `url(${userAvatars[id].lqip})` }}
                 // Animate on event
                 onClick={() => setAnimatingAvatar(id)}
                 onAnimationEnd={() =>

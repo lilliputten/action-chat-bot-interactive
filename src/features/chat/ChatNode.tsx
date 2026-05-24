@@ -42,7 +42,6 @@ export function ChatNode(props: TProps) {
         className={cn(
           isDev && '__ChatNode_Avatar', // DEBUG
           'max-xs:hidden shrink-0',
-          // follow && 'pointer-events-none opacity-0 aria-hidden:hidden',
         )}
         inspector={inspector}
         avatarType={user}
@@ -53,10 +52,7 @@ export function ChatNode(props: TProps) {
           isDev && '__ChatNode_Bubble', // DEBUG
           bubbleClassName,
         )}
-        bubbleContentClassName={cn(
-          // isUser && inspector === 'angry' && 'bg-red-500',
-          bubbleContentClassName,
-        )}
+        bubbleContentClassName={bubbleContentClassName}
         inspector={inspector}
         user={user}
         when={when}

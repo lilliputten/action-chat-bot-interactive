@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig } from 'vite';
+import lqip from 'vite-plugin-lqip';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -14,6 +15,7 @@ export default defineConfig({
 
   plugins: [
     // Plugins...
+    lqip(),
     tailwindcss(),
     react(),
     tsconfigPaths(),

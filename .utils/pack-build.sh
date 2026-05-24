@@ -1,6 +1,6 @@
 #!/bin/sh
 # @desc Pack publish folder
-# @changed 2024.12.11, 19:20
+# @changed 2026.05.24, 16:01
 
 scriptsPath=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
 rootPath=`dirname "$scriptsPath"`
@@ -20,12 +20,15 @@ VERSION=`cat "$VERSION_PATH"`
 # TIMESTAMP=`date -r "$VERSION_PATH" "+%Y.%m.%d %H:%M:%S %z"`
 TIMETAG=`date -r "$VERSION_PATH" "+%y%m%d-%H%M"`
 
+ARCDIR=".arc"
 ARCNAME="$PRJNAME-v.$VERSION-$TIMETAG.zip"
 
 echo "Pack publish folder '$BUILD_FOLDER' to archive '$ARCNAME'..."
 
+mkdir -p $ARCDIR
+
 cd "$BUILD_FOLDER" && \
   pwd && \
-  zip -r "../$ARCNAME" * -x "*_" -x "*.swp"
+  zip -r "../$ARCDIR/$ARCNAME" * -x "*_" -x "*.swp"
   cd .. && \
   echo OK

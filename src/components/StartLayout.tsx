@@ -1,4 +1,7 @@
+import { preload } from 'react-dom';
+
 import { cn } from '@/lib/helpers';
+import bgImg from '@/assets/bg/bg-image-03.jpg';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
@@ -9,6 +12,8 @@ interface TProps {
 
 export function StartLayout(props: TProps) {
   const { className, children } = props;
+
+  preload(bgImg, { as: 'image' });
 
   return (
     <div
@@ -24,10 +29,11 @@ export function StartLayout(props: TProps) {
         className={cn(
           isDev && '__StartLayout_BackgroundImage', // DEBUG
           'absolute inset-0',
-          'bg-[url(bg-image-03.jpg)] bg-cover bg-center',
+          'bg-cover bg-center',
           'opacity-10',
           'z-0',
         )}
+        style={{ backgroundImage: `url(${bgImg})` }}
       />
       <div
         className={cn(
@@ -43,7 +49,6 @@ export function StartLayout(props: TProps) {
             isDev && '__StartLayout_ScrollContainer', // DEBUG
             'scrollbar-brand overflow-auto',
             'flex w-full flex-1 flex-col',
-            'z-1',
           )}
         >
           <div

@@ -2,6 +2,7 @@ import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/helpers';
+import inspectorCharacterLqip from '@/assets/characters/inspector/inspector-character.png?lqip';
 import { StartLayout } from '@/components';
 import { isDev, startRoute } from '@/config';
 
@@ -40,11 +41,13 @@ export function IntroPage(props: TProps) {
               isDev && '__IntroPage_InspectorImage', // DEBUG
               'mx-auto size-36 object-cover',
               'rounded-full',
-              'border-6 border-white/50',
+              'ring-6 ring-white',
               'transition',
               'pointer-events-none',
+              'bg-cover',
             )}
-            src={`characters/inspector/inspector-character.png`}
+            style={{ backgroundImage: `url(${inspectorCharacterLqip.lqip})` }}
+            src={inspectorCharacterLqip.src}
           />
           <h2 className="m-0">
             Репетиция разговора с инспектором Росздравнадзора о хранении лекарств в вашей аптеке

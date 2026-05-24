@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/helpers';
 import { StartLayout } from '@/components';
-import { isDev, rootRoute, startRoute } from '@/config';
+import { isDev, rootRoute } from '@/config';
 import { Avatar, TInspectorMoodId } from '@/features/avatar';
 import { TScenarioStats } from '@/features/scenario';
 
