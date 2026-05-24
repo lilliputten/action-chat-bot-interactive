@@ -98,7 +98,7 @@ function NavIcon(props: TIconProps) {
         'transition',
         'cursor-pointer',
         'opacity-70',
-        'hover:opacity-100',
+        'hover:scale-110 hover:opacity-100',
         'p-2',
         'bg-blue-700 active:bg-blue-800',
         disabled && 'disabled pointer-events-none opacity-25',

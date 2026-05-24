@@ -24,14 +24,18 @@ export function ChatBubble(props: TProps) {
       ? 'bg-red-500'
       : inspector === 'happy'
         ? 'bg-green-500'
-        : 'bg-orange-500';
+        : inspector === 'none'
+          ? 'bg-blue-500'
+          : 'bg-orange-500';
   const fillColor = isInspector
     ? 'fill-slate-100'
     : inspector === 'angry'
       ? 'fill-red-500'
       : inspector === 'happy'
         ? 'fill-green-500'
-        : 'fill-orange-500';
+        : inspector === 'none'
+          ? 'fill-blue-500'
+          : 'fill-orange-500';
   const textColor = isInspector ? 'text-slate-900' : 'text-white';
   const [isAnimating, setIsAnimating] = React.useState(false);
   React.useEffect(() => {
@@ -58,9 +62,7 @@ export function ChatBubble(props: TProps) {
         <div
           className={cn(
             isDev && '__ChatBubble_Content', // DEBUG
-            'content-truncate',
-            'card-content',
-            'rounded-xl',
+            'content-truncate card-content rounded-xl',
             'px-5 py-2',
             !follow && (isInspector ? 'rounded-tl-lg' : 'rounded-tr-lg'),
             bgColor,

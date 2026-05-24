@@ -1,7 +1,8 @@
 export const inspectorMoods = {
-  neutral: 'Нейтрален',
-  angry: 'Расстроен',
-  happy: 'Доволен',
+  none: 'Не выражено',
+  neutral: 'Нейтральное',
+  angry: 'Расстроенное',
+  happy: 'Довольное',
 } as const;
 export type TInspectorMoodId = keyof typeof inspectorMoods;
 export type TInspectorMoodName = (typeof inspectorMoods)[keyof typeof inspectorMoods];
