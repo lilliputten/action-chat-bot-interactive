@@ -37,6 +37,9 @@ export function ResultsPage(props: TProps) {
 
   React.useEffect(() => {
     if (!chatStats) {
+      // Clear all possible previous data...
+      clearChatData();
+      // Navigate to the inter page...
       navigate(rootRoute);
     }
   }, [chatStats, navigate]);
@@ -149,7 +152,7 @@ export function ResultsPage(props: TProps) {
             onClick={() => {
               // Clear all possible previous data...
               clearChatData();
-              // Navigate to the intor page...
+              // Navigate to the inter page...
               navigate(rootRoute);
             }}
           >

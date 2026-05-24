@@ -5,6 +5,8 @@ import bgImg from '@/assets/bg/bg-image-03.jpg';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
+import { Actions } from './Actions';
+
 interface TProps {
   className?: string;
   children: TReactNode;
@@ -62,6 +64,7 @@ export function StartLayout(props: TProps) {
           </div>
         </div>
       </div>
+      <Actions />
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import { ChevronLeft, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { cn } from '@/lib/helpers';
 import userAvatarFemale from '@/assets/characters/user/user-female.png?lqip';
 import userAvatarMale from '@/assets/characters/user/user-male.png?lqip';
 import { StartLayout } from '@/components';
-import { chatRoute, isDev, rootRoute } from '@/config';
+import { chatRoute, isDev } from '@/config';
 import { avatarTypeIds, avatarTypes, TAvatarTypeId } from '@/features/avatar';
 import { clearChatData } from '@/features/chat/helpers';
 import { LQIP } from '@/global';
@@ -109,6 +109,7 @@ export function StartPage(props: TProps) {
             'box-border flex flex-wrap items-center gap-4',
           )}
         >
+          {/*
           <div
             className={cn(
               isDev && '__StartPage_Action_Back', // DEBUG
@@ -120,6 +121,7 @@ export function StartPage(props: TProps) {
             <ChevronLeft className="size-4 shrink-0" />
             <span className="truncate">Назад</span>
           </div>
+          */}
           <div
             className={cn(
               isDev && '__StartPage_Action_Start', // DEBUG

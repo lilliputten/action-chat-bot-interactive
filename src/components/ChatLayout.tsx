@@ -6,6 +6,8 @@ import bgImg from '@/assets/bg/bg-image-03.jpg';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
+import { Actions } from './Actions';
+
 interface TProps {
   className?: string;
   sidePanelClassName?: string;
@@ -87,7 +89,7 @@ export function ChatLayout(props: TProps) {
           'rounded-2xl',
           'bg-sky-800/80',
           'border border-sky-800',
-          'shadow-xl',
+          'shadow-lg/30',
           'z-1',
         )}
       >
@@ -128,6 +130,7 @@ export function ChatLayout(props: TProps) {
           {rightContent}
         </div>
       )}
+      <Actions />
     </div>
   );
 }
