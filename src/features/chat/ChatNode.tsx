@@ -1,4 +1,4 @@
-import { cn } from '@/lib/helpers';
+import { cn, TDateLike } from '@/lib/helpers';
 import { MarkdownText } from '@/components';
 import { isDev } from '@/config';
 
@@ -6,11 +6,12 @@ import { Avatar, defaultInspectorMoodId } from '../avatar';
 import { ChatBubble } from './ChatBubble';
 import { TChatItem } from './TChatItem';
 
-interface TProps extends Omit<TChatItem, 'content'> {
+interface TProps extends Omit<TChatItem, 'content' | 'when'> {
   onClick?: () => void;
   content: React.ReactNode | string;
   bubbleClassName?: string;
   bubbleContentClassName?: string;
+  when?: TDateLike;
 }
 
 export function ChatNode(props: TProps) {

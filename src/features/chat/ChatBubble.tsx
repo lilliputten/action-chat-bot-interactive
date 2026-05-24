@@ -1,16 +1,17 @@
 import React from 'react';
 
 import { cn } from '@/lib/helpers';
-import { relativeDateFormat } from '@/lib/helpers/dates';
+import { relativeDateFormat, TDateLike } from '@/lib/helpers/dates';
 import { isDev } from '@/config';
 import { TReactNode } from '@/lib';
 
 import { TChatItem } from './TChatItem';
 
-interface TProps extends Pick<TChatItem, 'user' | 'when' | 'follow' | 'inspector'> {
+interface TProps extends Pick<TChatItem, 'user' | 'follow' | 'inspector'> {
   className?: string;
   bubbleContentClassName?: string;
   children: TReactNode;
+  when?: TDateLike;
 }
 
 export function ChatBubble(props: TProps) {
@@ -84,7 +85,7 @@ export function ChatBubble(props: TProps) {
             className={[
               isDev && '__ChatBubble_Tip', // DEBUG
               'absolute top-0 h-4 w-8',
-              isInspector ? '-left-0' : '-right-0',
+              isInspector ? 'left-0' : 'right-0',
             ].join(' ')}
           >
             <svg viewBox="0 0 100 50" className="absolute top-0 w-full">

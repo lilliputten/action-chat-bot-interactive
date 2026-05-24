@@ -7,7 +7,7 @@ export interface TChatItem {
   scenarioId?: string; // TScenarioItemId;
   /** Markdown content */
   content: string;
-  when?: TDateLike;
+  when: TDateLike;
   inspector?: TInspectorMoodId;
   user?: TAvatarTypeId;
   follow?: boolean;

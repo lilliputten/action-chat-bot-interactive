@@ -17,7 +17,7 @@ import { TTimeoutHandler } from '@/lib';
 interface TProps {
   className?: string;
   scenarioId: TScenarioItemId;
-  setChatHistory: React.Dispatch<React.SetStateAction<TChatItem[]>>;
+  addChatItem: (chatItem: TChatItem) => void;
   setIsWaiting: React.Dispatch<React.SetStateAction<boolean>>;
   setScenarioId: React.Dispatch<React.SetStateAction<TScenarioItemId | undefined>>;
   setChatStats: React.Dispatch<React.SetStateAction<TScenarioStats>>;
@@ -36,7 +36,7 @@ export function LastChatNode(props: TProps) {
   const {
     className,
     scenarioId,
-    setChatHistory,
+    addChatItem,
     setIsWaiting,
     setScenarioId,
     setChatStats,
@@ -220,7 +220,7 @@ export function LastChatNode(props: TProps) {
                 };
                 setChatStats((stats) => ({ ...stats, points: stats.points + (points || 0) }));
                 setAnswerIdx(idx);
-                setChatHistory((history) => history.concat(chatItem));
+                addChatItem(chatItem);
                 if (reaction) {
                   setIsWaiting(true);
                   memo.waitingTimeoutHandler = setTimeout(() => {
@@ -230,7 +230,7 @@ export function LastChatNode(props: TProps) {
                       when: Date.now(),
                       inspector: inspectorMood,
                     };
-                    setChatHistory((history) => history.concat(chatItem));
+                    addChatItem(chatItem);
                     goToTheNextItem(goTo);
                   }, autoGoToDelay);
                 } else {

@@ -5,7 +5,7 @@ import { cn } from '@/lib/helpers';
 import { ChatLayout, LeftSide } from '@/components';
 import { initChatDelay, isDev, resultsRoute, tickDelay } from '@/config';
 import { defaultInspectorMoodId, TInspectorMoodId } from '@/features/avatar';
-import { ChatNode, LastChatNode, TChatItem } from '@/features/chat';
+import { chatDB, ChatNode, LastChatNode, TChatItem } from '@/features/chat';
 import {
   defaultScenarioItemId,
   scenario,
@@ -20,6 +20,7 @@ interface TProps {
 }
 
 interface TMemo {
+  inited?: boolean;
   // tickTimeoutHandler?: TTimeoutHandler;
   inspectorMood?: TInspectorMoodId;
   lastChatItem?: TChatItem;
@@ -39,54 +40,89 @@ export function ChatPage(props: TProps) {
 
   const [scenarioId, setScenarioId] = React.useState<TScenarioItemId | undefined>();
 
+  // Effect: Restore scenarioId
+  React.useEffect(() => {
+    // Try to restore a chat history...
+    let scenarioId = localStorage.getItem('scenarioId') as TScenarioItemId | undefined;
+    if (!scenarioId || !scenarioItemIds.includes(scenarioId)) {
+      scenarioId = defaultScenarioItemId;
+    }
+    setScenarioId(scenarioId);
+  }, []);
+
   // State: Chat history
-  const [chatHistory, setChatHistory] = React.useState<TChatItem[]>(() => {
-    const jsonStr = localStorage.getItem('chatHistory');
-    try {
-      if (jsonStr) {
-        const chatHistory = JSON.parse(jsonStr);
-        console.log('[ChatPage:Effect: Restore chatHistory]', {
+  const [chatHistory, setChatHistory] = React.useState<TChatItem[]>([]);
+  const addChatItem = React.useCallback((chatItem: TChatItem) => {
+    setChatHistory((chatHistory) => {
+      // Check for duplicate errors
+      const ids = new Set(chatHistory.map(({ scenarioId }) => scenarioId));
+      if (chatItem.scenarioId && ids.has(chatItem.scenarioId)) {
+        const message = `The chat history record for the scenario item '${chatItem.scenarioId}' has been already existed`;
+        // eslint-disable-next-line no-console
+        console.warn('[LastChatNode:addChatItem]', message, {
           chatHistory,
         });
+        // debugger; // eslint-disable-line no-debugger
         return chatHistory;
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn('[ChatPage:Effect: Restore chat stats] Cannot parse saved data', {
-        error,
-      });
-      debugger; // eslint-disable-line no-debugger
-    }
-    // Return empty history
-    return [];
-  });
+      /* // DEBUG
+       * console.log('[ChatPage:addChatItem] Before add', {
+       *   chatItem,
+       *   ids,
+       *   chatHistory,
+       * });
+       */
+      chatDB
+        .add(chatItem)
+        /* // DEBUG
+         * .then(() => {
+         *   console.log('[ChatPage:addChatItem] Added', {
+         *     chatItem,
+         *     ids,
+         *     chatHistory,
+         *   });
+         * })
+         */
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.warn('[ChatPage:addChatItem]', {
+            error,
+            chatItem,
+            ids,
+            chatHistory,
+          });
+          // debugger; // eslint-disable-line no-debugger
+        });
+      return chatHistory.concat(chatItem);
+    });
+  }, []);
   const lastChatItem: TChatItem | undefined = chatHistory?.[chatHistory?.length - 1];
   memo.lastChatItem = lastChatItem;
   const inspectorMood = lastChatItem?.inspector; // || defaultInspectorMoodId;
   memo.inspectorMood = inspectorMood;
-  // // Effect: Restore chatHistory...
-  // React.useEffect(() => {
-  //   const jsonStr = localStorage.getItem('chatHistory');
-  //   try {
-  //     if (jsonStr) {
-  //       const chatHistory = JSON.parse(jsonStr);
-  //       console.log('[ChatPage:Effect: Restore chatHistory]', {
-  //         chatHistory,
-  //       });
-  //       setChatHistory(chatHistory);
-  //     }
-  //   } catch (error) {
-  //     // eslint-disable-next-line no-console
-  //     console.warn('[ChatPage:Effect: Restore chat stats] Cannot parse saved data', {
-  //       error,
-  //     });
-  //     debugger; // eslint-disable-line no-debugger
-  //   }
-  // }, []);
-  // Effect: Save chatHistory...
+  // Callback: Restore chatHistory...
+  const fetchHistory = React.useCallback(async () => {
+    try {
+      const items = await chatDB.getAll();
+      setChatHistory((chatHistory) => {
+        const ids = new Set(chatHistory.map(({ scenarioId }) => scenarioId));
+        return chatHistory.concat(
+          ...items.filter(({ scenarioId }) => !scenarioId || !ids.has(scenarioId)),
+        );
+      });
+      setInited(true);
+      memo.inited = true;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[ChatPage:Callback: Restore chatHistory]', {
+        error,
+      });
+      debugger; // eslint-disable-line no-debugger
+    }
+  }, [memo]);
   React.useEffect(() => {
-    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-  }, [chatHistory]);
+    fetchHistory();
+  }, [fetchHistory]);
 
   // State: Chat stats
   const [chatStats, setChatStats] = React.useState<TScenarioStats>(() => {
@@ -109,39 +145,12 @@ export function ChatPage(props: TProps) {
       started: Date.now(),
     };
   });
-  // // Effect: Restore chatStats...
-  // React.useEffect(() => {
-  //   const jsonStr = localStorage.getItem('chatStats');
-  //   try {
-  //     if (jsonStr) {
-  //       const chatStats = JSON.parse(jsonStr);
-  //       setChatStats(chatStats);
-  //     }
-  //   } catch (error) {
-  //     // eslint-disable-next-line no-console
-  //     console.warn('[ChatPage:Effect: Restore chat stats] Cannot parse saved data', {
-  //       error,
-  //     });
-  //     debugger; // eslint-disable-line no-debugger
-  //   }
-  // }, []);
   // Effect: Save chatStats...
   React.useEffect(() => {
     localStorage.setItem('chatStats', JSON.stringify(chatStats));
   }, [chatStats]);
 
-  // Effect: Restore scenarioId
-  React.useEffect(() => {
-    // Try to restore a chat history...
-    let scenarioId = localStorage.getItem('scenarioId') as TScenarioItemId | undefined;
-    if (!scenarioId || !scenarioItemIds.includes(scenarioId)) {
-      scenarioId = defaultScenarioItemId;
-    }
-    setScenarioId(scenarioId);
-    setInited(true);
-  }, []);
-
-  // Effect: Initialize
+  // Effect: Initialize tick timer
   React.useEffect(() => {
     const tickIntervalHandler = setInterval(() => {
       const tick = Date.now();
@@ -149,7 +158,9 @@ export function ChatPage(props: TProps) {
     }, tickDelay);
     let initTimeoutHandler: TTimeoutHandler | undefined = setTimeout(() => {
       initTimeoutHandler = undefined;
+      // XXX
       setInited(true);
+      memo.inited = true;
     }, initChatDelay);
     return () => {
       clearInterval(tickIntervalHandler);
@@ -157,15 +168,15 @@ export function ChatPage(props: TProps) {
         clearTimeout(initTimeoutHandler);
       }
     };
-  }, []);
+  }, [memo]);
 
   // Effect: Add a new scenario node to the chat history, save scenario id to localStorage
   React.useEffect(() => {
-    // No scenario id yet
-    if (!scenarioId) {
+    // Is there a scenario id and is it initialized aleady?
+    if (!scenarioId || !inited) {
       return;
     }
-    localStorage.setItem('scenarioId', scenarioId || '');
+    localStorage.setItem('scenarioId', scenarioId);
     const scenarioNode = scenario[scenarioId];
     // Not found scenario node
     if (!scenarioNode) {
@@ -191,25 +202,8 @@ export function ChatPage(props: TProps) {
       follow: !!memo.lastChatItem && !memo.lastChatItem?.user,
       // user
     };
-    console.log('[ChatPage:Effect: Add scenario node to the chat history]', {
-      chatItem,
-      scenarioId,
-    });
-    setChatHistory((chatHistory) => {
-      // Check for duplicate errors
-      if (chatHistory.find(({ scenarioId: id }) => id === scenarioId)) {
-        const message = `The chat history record for the scenario item '${scenarioId}' has been already added`;
-        // eslint-disable-next-line no-console
-        console.warn('[LastChatNode]', message, {
-          chatHistory,
-          scenarioId,
-        });
-        // debugger; // eslint-disable-line no-debugger
-        return chatHistory;
-      }
-      return chatHistory.concat(chatItem);
-    });
-  }, [memo, scenarioId]);
+    addChatItem(chatItem);
+  }, [inited, memo, scenarioId, addChatItem]);
 
   const leftContent = <LeftSide inspectorMood={inspectorMood} />;
 
@@ -261,7 +255,7 @@ export function ChatPage(props: TProps) {
               isDev && '__ChatPage_LastChatNode', // DEBUG
             )}
             scenarioId={scenarioId}
-            setChatHistory={setChatHistory}
+            addChatItem={addChatItem}
             setIsWaiting={setIsWaiting}
             setScenarioId={setScenarioId}
             setChatStats={setChatStats}

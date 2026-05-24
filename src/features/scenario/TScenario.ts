@@ -1,4 +1,4 @@
-import { TDateLike, TDateTicks } from '@/lib';
+import { TDateTicks } from '@/lib';
 
 export const scenarioItemIds = [
   'START',
