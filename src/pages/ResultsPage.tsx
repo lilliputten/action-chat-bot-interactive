@@ -6,6 +6,7 @@ import { cn } from '@/lib/helpers';
 import { StartLayout } from '@/components';
 import { isDev, rootRoute } from '@/config';
 import { Avatar, TInspectorMoodId } from '@/features/avatar';
+import { clearChatData } from '@/features/chat/helpers';
 import { TScenarioStats } from '@/features/scenario';
 
 interface TProps {
@@ -145,7 +146,12 @@ export function ResultsPage(props: TProps) {
               'btn-base btn-large flex-1',
               'bg-blue-600 hover:bg-blue-700 active:bg-blue-800',
             )}
-            onClick={() => navigate(rootRoute)}
+            onClick={() => {
+              // Clear all possible previous data...
+              clearChatData();
+              // Navigate to the intor page...
+              navigate(rootRoute);
+            }}
           >
             <RefreshCw className="size-4 shrink-0" />
             <span className="truncate">Пройти проверку ещё раз</span>

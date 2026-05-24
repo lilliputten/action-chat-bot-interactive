@@ -159,6 +159,10 @@ export class ChatDB {
     this.db?.close();
     this.db = null;
   }
+
+  deleteDb() {
+    indexedDB.deleteDatabase(ChatDB.DB_NAME);
+  }
 }
 
 /** Singleton instance for use across the app. */

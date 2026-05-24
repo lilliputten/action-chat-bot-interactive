@@ -8,6 +8,7 @@ import userAvatarMale from '@/assets/characters/user/user-male.png?lqip';
 import { StartLayout } from '@/components';
 import { chatRoute, isDev, rootRoute } from '@/config';
 import { avatarTypeIds, avatarTypes, TAvatarTypeId } from '@/features/avatar';
+import { clearChatData } from '@/features/chat/helpers';
 import { LQIP } from '@/global';
 
 interface TProps {
@@ -126,7 +127,12 @@ export function StartPage(props: TProps) {
               startAllowed && 'bg-green-500 hover:bg-green-600 active:bg-green-700',
               !startAllowed && 'disabled border border-white/50',
             )}
-            onClick={() => navigate(chatRoute)}
+            onClick={() => {
+              // Clear all possible previous data...
+              clearChatData();
+              // Navigate to the next page...
+              navigate(chatRoute);
+            }}
           >
             <Play className="size-4 shrink-0" />
             <span className="truncate">Начать</span>

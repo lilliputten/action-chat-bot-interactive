@@ -5,6 +5,7 @@ import { cn } from '@/lib/helpers';
 import inspectorCharacterLqip from '@/assets/characters/inspector/inspector-character.png?lqip';
 import { StartLayout } from '@/components';
 import { isDev, startRoute } from '@/config';
+import { clearChatData } from '@/features/chat/helpers';
 
 interface TProps {
   className?: string;
@@ -72,7 +73,12 @@ export function IntroPage(props: TProps) {
               'btn-base btn-large flex-1',
               'bg-green-500 hover:bg-green-600 active:bg-green-700',
             )}
-            onClick={() => navigate(startRoute)}
+            onClick={() => {
+              // Clear all possible previous data...
+              clearChatData();
+              // Navigate to the next page...
+              navigate(startRoute);
+            }}
           >
             <ChevronRight className="size-4 shrink-0" />
             <span className="truncate">Дальше</span>
