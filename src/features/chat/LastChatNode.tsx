@@ -143,106 +143,117 @@ export function LastChatNode(props: TProps) {
     }
   }, [answers, scrollBottom]);
 
-  if (answers && answerIdx == undefined) {
-    return (
-      <>
-        {answers.map((answer, idx) => {
-          const content = (
+  // Display nothing if no answers or an answers has been already made
+  if (!answers || answerIdx != undefined) {
+    return null;
+  }
+
+  return (
+    <>
+      {answers.map((answer, idx) => {
+        const content = (
+          <div
+            className={cn(
+              isDev && '__LastChatNode_Answer_Content', // DEBUG
+              'content-truncate',
+              'group/answer',
+              'flex items-center gap-4',
+            )}
+          >
             <div
               className={cn(
-                isDev && '__LastChatNode_Answer_Content', // DEBUG
-                'group/answer',
-                'flex items-center gap-4',
+                isDev && '__LastChatNode_Answer_Content_Circle', // DEBUG
+                'flex size-6 shrink-0 items-center justify-center',
+                'rounded-full border border-gray-500/50',
+                'transition',
+                'bg-white/80',
+                'group-hover/answer:border-blue-500',
+                'group-hover/answer:bg-white',
+                'max-xs:hidden',
               )}
             >
               <div
                 className={cn(
-                  isDev && '__LastChatNode_Answer_Content_Circle', // DEBUG
-                  'flex size-6 shrink-0 items-center justify-center',
-                  'rounded-full border border-gray-500/50',
-                  'transition',
-                  'bg-white/80',
-                  'group-hover/answer:border-blue-500',
-                  'group-hover/answer:bg-white',
+                  isDev && '__LastChatNode_Answer_Content_Dot', // DEBUG
+                  'flex size-4 shrink-0 items-center justify-center',
+                  'rounded-full bg-blue-500',
+                  'opacity-0 transition',
+                  'group-hover/answer:opacity-100',
                 )}
-              >
-                <div
-                  className={cn(
-                    isDev && '__LastChatNode_Answer_Content_Dot', // DEBUG
-                    'flex size-4 shrink-0 items-center justify-center',
-                    'rounded-full bg-blue-500',
-                    'opacity-0 transition',
-                    'group-hover/answer:opacity-100',
-                  )}
-                />
-              </div>
-              <MarkdownText>{answer.text}</MarkdownText>
+              />
             </div>
-          );
-          return (
-            <ChatNode
-              key={`${scenarioId}-answer-${idx}`}
+            <MarkdownText
               className={cn(
-                isDev && '__LastChatNode_Answer', // DEBUG
-                !idx && 'mt-3',
-                'cursor-pointer transition',
-                'hover:opacity-80',
-                'active:opacity-50',
-                className,
+                isDev && '__LastChatNode_Answer_Content_Text', // DEBUG
+                'flex-1',
+                'content-truncate',
               )}
-              bubbleContentClassName="bg-blue-300"
-              content={content}
-              follow
-              onClick={() => {
-                const { reaction, goTo, points } = answer;
-                if (!goTo) {
-                  const msg = `No goTo provided for the scenario node answer '${scenarioId}:${idx}'`;
-                  const error = new Error(msg);
-                  // eslint-disable-next-line no-console
-                  console.error('[LastChatNode]', msg, {
-                    error,
-                    answer,
-                    scenarioId,
-                  });
-                  debugger; // eslint-disable-line no-debugger
-                }
-                const inspectorMood: TInspectorMoodId = !points
-                  ? 'happy'
-                  : points === 1
-                    ? 'neutral'
-                    : 'angry';
-                const chatItem: TChatItem = {
-                  scenarioId: `${scenarioId}-answer`,
-                  content: answer.text,
-                  when: Date.now(),
-                  inspector: inspectorMood,
-                  user: selectedAvatarId,
-                };
-                setChatStats((stats) => ({ ...stats, points: stats.points + (points || 0) }));
-                setAnswerIdx(idx);
-                addChatItem(chatItem);
-                if (reaction) {
-                  setIsWaiting(true);
-                  memo.waitingTimeoutHandler = setTimeout(() => {
-                    const chatItem: TChatItem = {
-                      scenarioId: `${scenarioId}-answer-reaction`,
-                      content: reaction,
-                      when: Date.now(),
-                      inspector: inspectorMood,
-                    };
-                    addChatItem(chatItem);
-                    goToTheNextItem(goTo);
-                  }, autoGoToDelay);
-                } else {
+            >
+              {answer.text}
+            </MarkdownText>
+          </div>
+        );
+        return (
+          <ChatNode
+            key={`${scenarioId}-answer-${idx}`}
+            className={cn(
+              isDev && '__LastChatNode_Answer', // DEBUG
+              !idx && 'mt-3',
+              'cursor-pointer transition',
+              'hover:opacity-80',
+              'active:opacity-50',
+              className,
+            )}
+            bubbleContentClassName="bg-blue-300"
+            content={content}
+            follow
+            onClick={() => {
+              const { reaction, goTo, points } = answer;
+              if (!goTo) {
+                const msg = `No goTo provided for the scenario node answer '${scenarioId}:${idx}'`;
+                const error = new Error(msg);
+                // eslint-disable-next-line no-console
+                console.error('[LastChatNode]', msg, {
+                  error,
+                  answer,
+                  scenarioId,
+                });
+                debugger; // eslint-disable-line no-debugger
+              }
+              const inspectorMood: TInspectorMoodId = !points
+                ? 'happy'
+                : points === 1
+                  ? 'neutral'
+                  : 'angry';
+              const chatItem: TChatItem = {
+                scenarioId: `${scenarioId}-answer`,
+                content: answer.text,
+                when: Date.now(),
+                inspector: inspectorMood,
+                user: selectedAvatarId,
+              };
+              setChatStats((stats) => ({ ...stats, points: stats.points + (points || 0) }));
+              setAnswerIdx(idx);
+              addChatItem(chatItem);
+              if (reaction) {
+                setIsWaiting(true);
+                memo.waitingTimeoutHandler = setTimeout(() => {
+                  const chatItem: TChatItem = {
+                    scenarioId: `${scenarioId}-answer-reaction`,
+                    content: reaction,
+                    when: Date.now(),
+                    inspector: inspectorMood,
+                  };
+                  addChatItem(chatItem);
                   goToTheNextItem(goTo);
-                }
-              }}
-            />
-          );
-        })}
-      </>
-    );
-  }
-
-  return null;
+                }, autoGoToDelay);
+              } else {
+                goToTheNextItem(goTo);
+              }
+            }}
+          />
+        );
+      })}
+    </>
+  );
 }

@@ -60,7 +60,8 @@ export function ChatBubble(props: TProps) {
             isDev && '__ChatBubble_Content', // DEBUG
             'content-truncate',
             'card-content',
-            'rounded-xl px-5 py-2',
+            'rounded-xl',
+            'px-5 py-2',
             !follow && (isInspector ? 'rounded-tl-lg' : 'rounded-tr-lg'),
             bgColor,
             textColor,
