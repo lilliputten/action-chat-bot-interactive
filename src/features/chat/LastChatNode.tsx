@@ -220,11 +220,8 @@ export function LastChatNode(props: TProps) {
                 });
                 debugger; // eslint-disable-line no-debugger
               }
-              const inspectorMood: TInspectorMoodId = !points
-                ? 'happy'
-                : points === 1
-                  ? 'neutral'
-                  : 'angry';
+              const inspectorMood: TInspectorMoodId =
+                points === 0 ? 'happy' : !points ? 'none' : points === 1 ? 'neutral' : 'angry';
               const chatItem: TChatItem = {
                 scenarioId: `${scenarioId}-answer`,
                 content: answer.text,

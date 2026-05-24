@@ -3,7 +3,7 @@ import { Maximize, Minimize, RefreshCw } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import screenfull from 'screenfull';
 
-import { chatRoute, isDev, rootRoute } from '@/config';
+import { chatRoute, isDev, resultsRoute, rootRoute } from '@/config';
 import { clearChatData } from '@/features/chat/helpers';
 import { cn } from '@/lib';
 
@@ -17,7 +17,10 @@ export function Actions(props: TActionsProps) {
 
   const { pathname } = useLocation();
   const isRoot = !pathname || pathname === rootRoute;
+  const isResults = pathname === resultsRoute;
   const isChat = pathname === chatRoute;
+
+  const showStasrtOverButton = !(isRoot || isResults);
 
   const navigate = useNavigate();
 
@@ -48,7 +51,7 @@ export function Actions(props: TActionsProps) {
         className,
       )}
     >
-      {!isRoot && (
+      {showStasrtOverButton && (
         <NavIcon
           className={cn(
             isDev && '__Actions_Fullscreen', // DEBUG
@@ -98,7 +101,7 @@ function NavIcon(props: TIconProps) {
         'transition',
         'cursor-pointer',
         'opacity-70',
-        'hover:opacity-100',
+        'hover:scale-110 hover:opacity-100',
         'p-2',
         'bg-blue-700 active:bg-blue-800',
         disabled && 'disabled pointer-events-none opacity-25',

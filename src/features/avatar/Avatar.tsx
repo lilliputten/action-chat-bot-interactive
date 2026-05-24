@@ -24,6 +24,7 @@ const userAvatars: Record<TAvatarTypeId, LQIP> = {
   female: userAvatarFemale,
 };
 const inspectorAvatars: Record<TInspectorMoodId, LQIP> = {
+  none: inspectorAvatarNeutral,
   neutral: inspectorAvatarNeutral,
   angry: inspectorAvatarAngry,
   happy: inspectorAvatarHappy,
@@ -38,6 +39,16 @@ export function Avatar(props: TProps) {
   const imgLqip = avatarType ? userAvatars[avatarType] : inspectorAvatars[inspector];
   const sizeClass = large ? 'size-32' : 'size-16';
   const widthClass = large ? 'w-32' : 'w-16';
+  const colorClass =
+    inspector === 'angry'
+      ? 'ring-red-500'
+      : inspector === 'happy'
+        ? 'ring-green-500'
+        : inspector === 'neutral'
+          ? 'ring-orange-500'
+          : avatarType
+            ? 'ring-blue-500'
+            : 'ring-white';
   return (
     <div
       className={cn(
@@ -52,19 +63,10 @@ export function Avatar(props: TProps) {
           className={cn(
             isDev && '__Avatar_AvatarImage', // DEBUG
             sizeClass,
-            'object-cover',
-            'rounded-full',
-            'shadow-xl',
-            'bg-cover',
+            'rounded-full bg-cover object-cover shadow-xl',
             isAnimating && 'animate-scale-pulse',
             large ? 'ring-6' : 'ring-4',
-            inspector === 'angry'
-              ? 'ring-red-500'
-              : inspector === 'happy'
-                ? 'ring-green-500'
-                : avatarType
-                  ? 'ring-orange-500'
-                  : 'ring-white',
+            colorClass,
             'pointer-events-none',
           )}
           src={imgLqip.src}
