@@ -13,7 +13,7 @@ Dialog Chat-Bot Trainer with a pharmacy store inspector.
 
 ## Build info (auto-generated)
 
-- Project info: v.0.0.2 / 2026.05.24 22:03:26 +0300
+- Project info: v.0.0.3 / 2026.05.26 14:56:37 +0300
 
 ## Resources
 

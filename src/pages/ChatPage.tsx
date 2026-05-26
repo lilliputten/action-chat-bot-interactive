@@ -205,7 +205,7 @@ export function ChatPage(props: TProps) {
     addChatItem(chatItem);
   }, [inited, memo, scenarioId, addChatItem]);
 
-  const leftContent = <LeftSide inspectorMood={inspectorMood} />;
+  const leftContent = <LeftSide inspectorMood={inspectorMood} penaltyPoints={chatStats.points} />;
 
   const goToResults = React.useCallback(() => {
     navigate(resultsRoute);

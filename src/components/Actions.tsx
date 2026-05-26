@@ -47,7 +47,7 @@ export function Actions(props: TActionsProps) {
         'flex items-stretch justify-center gap-2',
         'z-20',
         'left-[50%] -translate-x-1/2',
-        isChat && 'sm:bottom-4 sm:left-4.5 sm:w-[23%] sm:translate-none',
+        isChat && 'sm:bottom-4 sm:left-4.5 sm:w-[20%] sm:min-w-40 sm:translate-none',
         className,
       )}
     >

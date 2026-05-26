@@ -5,14 +5,16 @@ import { Avatar, defaultInspectorMoodId, TInspectorMoodId } from '@/features/ava
 interface TProps {
   className?: string;
   inspectorMood?: TInspectorMoodId;
+  penaltyPoints?: number;
 }
 
 export function LeftSide(props: TProps) {
-  const { className, inspectorMood = defaultInspectorMoodId } = props;
+  const { className, inspectorMood = defaultInspectorMoodId, penaltyPoints } = props;
   return (
     <div
       className={cn(
         isDev && '__LeftSide', // DEBUG
+        'flex flex-col items-center gap-6',
         className,
       )}
     >
@@ -23,6 +25,13 @@ export function LeftSide(props: TProps) {
         inspector={inspectorMood}
         large
       />
+      <div
+        className={cn(
+          isDev && '__LeftSide_InspectorImage', // DEBUG
+        )}
+      >
+        Штрафных баллов: {penaltyPoints || 0}
+      </div>
     </div>
   );
 }

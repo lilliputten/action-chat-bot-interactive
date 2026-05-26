@@ -41,7 +41,8 @@ export function ChatLayout(props: TProps) {
   const sideBarClassName = cn(
     isDev && '__ChatLayout_Sidebar', // DEBUG
     'flex flex-col items-center justify-center gap-4',
-    'w-[23%]',
+    'w-[20%]',
+    'min-w-42',
     'max-sm:hidden', // Don't show side panels on small screens
     'z-1',
     sidePanelClassName,

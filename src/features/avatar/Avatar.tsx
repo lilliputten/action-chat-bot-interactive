@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { cn } from '@/lib/helpers';
-import inspectorAvatarAngry from '@/assets/characters/inspector/inspector-face-angry.png?lqip';
-import inspectorAvatarHappy from '@/assets/characters/inspector/inspector-face-happy.png?lqip';
-import inspectorAvatarNeutral from '@/assets/characters/inspector/inspector-face-neutral.png?lqip';
+import inspectorAvatarAngry from '@/assets/characters/inspector/inspector-face-v2-angry.png?lqip';
+import inspectorAvatarHappy from '@/assets/characters/inspector/inspector-face-v2-happy.png?lqip';
+import inspectorAvatarNeutral from '@/assets/characters/inspector/inspector-face-v2-neutral.png?lqip';
 import userAvatarFemale from '@/assets/characters/user/user-face-female.png?lqip';
 import userAvatarMale from '@/assets/characters/user/user-face-male.png?lqip';
 import { isDev } from '@/config';
