@@ -41,7 +41,7 @@ export function StartLayout(props: TProps) {
         className={cn(
           isDev && '__StartLayout_Main', // DEBUG
           'overflow-hidden',
-          'flex w-full flex-1 flex-col',
+          'flex w-full flex-1 flex-col gap-4',
           'rounded-md',
           'z-1',
         )}
@@ -61,10 +61,10 @@ export function StartLayout(props: TProps) {
             )}
           >
             {children}
+            <Actions />
           </div>
         </div>
       </div>
-      <Actions />
     </div>
   );
 }

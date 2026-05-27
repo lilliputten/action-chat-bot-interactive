@@ -40,13 +40,12 @@ export function Actions(props: TActionsProps) {
     <div
       className={cn(
         isDev && '__Actions', // DEBUG
-        'fixed',
+        isChat && 'fixed bottom-1',
         'select-none',
-        'bottom-1',
         'h-[3.5em]',
         'flex items-stretch justify-center gap-2',
         'z-20',
-        'left-[50%] -translate-x-1/2',
+        isChat && 'left-[50%] -translate-x-1/2',
         isChat && 'sm:bottom-4 sm:left-4.5 sm:w-[20%] sm:min-w-40 sm:translate-none',
         className,
       )}
@@ -97,7 +96,8 @@ function NavIcon(props: TIconProps) {
         'flex items-center justify-center',
         'size-[2em]',
         'text-white',
-        'rounded-full shadow-lg/30',
+        'rounded-full',
+        // 'shadow-lg/30',
         'transition',
         'cursor-pointer',
         'opacity-70',

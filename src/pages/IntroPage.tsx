@@ -40,7 +40,7 @@ export function IntroPage(props: TProps) {
           <img
             className={cn(
               isDev && '__IntroPage_InspectorImage', // DEBUG
-              'mx-auto size-36 object-cover',
+              'mx-auto size-30 object-cover',
               'rounded-full',
               'ring-6 ring-white',
               'transition',

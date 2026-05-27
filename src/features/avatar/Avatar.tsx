@@ -37,8 +37,8 @@ export function Avatar(props: TProps) {
     setIsAnimating(true);
   }, [inspector, avatarType]);
   const imgLqip = avatarType ? userAvatars[avatarType] : inspectorAvatars[inspector];
-  const sizeClass = large ? 'size-32' : 'size-16';
-  const widthClass = large ? 'w-32' : 'w-16';
+  const sizeClass = large ? 'size-30' : 'size-16';
+  const widthClass = large ? 'w-30' : 'w-16';
   const colorClass =
     inspector === 'angry'
       ? 'ring-red-500'

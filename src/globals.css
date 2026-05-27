@@ -40,7 +40,7 @@
   font-weight: 400;
 
   /* Set adaptive font size */
-  font-size: max(16px, 1.2vw);
+  font-size: max(15px, 1.2vw);
 
   color-scheme: light dark;
   color: var(--textColor);

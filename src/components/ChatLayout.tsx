@@ -91,6 +91,7 @@ export function ChatLayout(props: TProps) {
           'bg-sky-800/80',
           'border border-sky-800',
           'shadow-lg/30',
+          'max-sm:mb-12',
           'z-1',
         )}
       >

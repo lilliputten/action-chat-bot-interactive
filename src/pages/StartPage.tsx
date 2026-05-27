@@ -44,15 +44,14 @@ export function StartPage(props: TProps) {
         className={cn(
           isDev && '__StartPage_Content', // DEBUG
           // 'content-truncate',
-          'flex flex-col items-stretch justify-center gap-8',
+          'flex flex-col items-stretch justify-center gap-6',
         )}
       >
         <h2 className="m-0 text-center">Выберите аватар:</h2>
         <div
           className={cn(
             isDev && '__StartPage_Avatars', // DEBUG
-            // 'content-truncate',
-            'flex flex-wrap items-center justify-center gap-8',
+            'flex flex-wrap items-center justify-center gap-6',
           )}
         >
           {avatarTypeIds.map((id) => (
@@ -84,7 +83,7 @@ export function StartPage(props: TProps) {
               <img
                 className={cn(
                   isDev && '__StartPage_InspectorImage', // DEBUG
-                  'size-40 object-cover',
+                  'size-36 object-cover',
                   'rounded-xl',
                   'transition',
                   'pointer-events-none',
