@@ -24,12 +24,26 @@ export function ChatLayout(props: TProps) {
   preload(bgImg, { as: 'image' });
 
   const bottomRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const scrollBottom = React.useCallback(() => {
     requestAnimationFrame(() => {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      const scrollNode = scrollRef.current;
+      const bottomNode = bottomRef.current;
+      if (bottomNode && scrollNode) {
+        const scrollHeight = scrollNode?.scrollHeight;
+        console.log('[ChatLayout:scrollBottom]', {
+          scrollHeight,
+          bottomNode,
+          scrollNode,
+        });
+        // // Scroll method 1 (may cause the topmost window effects)
+        // bottomNode.scrollIntoView({ behavior: 'smooth' });
+        // Scroll method 2
+        scrollNode.scrollTo({ top: scrollHeight, behavior: 'smooth' });
+      }
     });
-  }, [bottomRef]);
+  }, [bottomRef, scrollRef]);
 
   React.useEffect(() => {
     if (setScrollBottom) {
@@ -96,6 +110,7 @@ export function ChatLayout(props: TProps) {
         )}
       >
         <div
+          ref={scrollRef}
           className={cn(
             isDev && '__ChatLayout_ScrollContainer', // DEBUG
             'scrollbar-brand overflow-auto',
